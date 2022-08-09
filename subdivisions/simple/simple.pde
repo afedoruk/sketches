@@ -91,3 +91,10 @@ void divide(PVector ul, PVector br, int deep) {
     rects.add(new URect(new_ul.x + random(-wiggle, wiggle), new_ul.y + random(-wiggle, wiggle), br.x + random(-wiggle, wiggle), br.y + random(-wiggle, wiggle)));
   }
 }
+
+color pickColor(float k) {
+  int s = pallete.length;
+  int ind = (int)map(k, 0, 1, 0, s);
+  color col = pallete[ind];
+  return col;
+}
