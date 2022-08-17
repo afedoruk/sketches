@@ -8,6 +8,7 @@ ArrayList<PVector> verts =  new ArrayList<PVector>();
 ArrayList<Polygon> polys =  new ArrayList<Polygon>();
 
 int NUM_OF_INITIAL_VERTICES = 12;
+int depth = 0, IMMUNITY_DEPTH = 3;
 
 void setup() {
   size(800, 800);
@@ -22,7 +23,7 @@ void setup() {
     verts.add(new PVector( width/2 + random(-excentr, excentr) + distance * cos(radians(angle)),  height/2  + random(-excentr, excentr) + distance * sin(radians(angle))));
   }
   Polygon initialPoly = new Polygon(new PVector(0, 0), verts);
-  initialPoly.display();
+  initialPoly.display2();
   polys.add(initialPoly);
 }
 
@@ -32,9 +33,7 @@ void draw() {
 void mouseClicked() {
   ArrayList<Polygon> newPolys = new ArrayList<Polygon>();
   for (Polygon poly: polys)  {
-    
-    float chanceToDivide = random(poly.area);
-    if(chanceToDivide > 1000) {
+    if(depth < IMMUNITY_DEPTH || !poly.immune) {
       newPolys.addAll(poly.divide());
     } else {
       newPolys.add(poly);
@@ -42,11 +41,12 @@ void mouseClicked() {
   }
   background(bg);
   for(Polygon newPoly:newPolys) {
-      newPoly.display();
+      newPoly.display2();
   }
   
   polys.clear();
   polys.addAll(newPolys);
+  depth++;
 }
 
 void keyPressed() {

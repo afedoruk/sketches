@@ -5,11 +5,15 @@ class Polygon {
   PVector pivot;
   PShape shape;
   float area;
+  boolean immune = false;
   
   Polygon(PVector _pivot, ArrayList<PVector> _verts) {
     pivot = _pivot;
     verts = _verts;
     area = getArea();
+    if(random(100) > 95) {
+      immune = true;
+    }
   }
   
   void display() {
@@ -20,6 +24,27 @@ class Polygon {
     shape.stroke(bg);
     shape.fill(#637987);
     shape.strokeWeight(map(constrain(area, 400, 1000), 400, 1000, 2, 15));
+    //shape.noStroke();
+    for(PVector vertex: verts) {
+      shape.vertex(vertex.x, vertex.y);
+      //println(vertex.x, " ", vertex.y);
+    }
+    shape.endShape(CLOSE);
+    shape(shape, pivot.x, pivot.y);
+    //fill(random(200), random(200), random(200));
+    //for(int i=0; i < verts.size(); i++) {
+    //  text(i, verts.get(i).x+random(20), verts.get(i).y+random(20)); 
+    //}
+  }
+  
+  void display2() {
+    shape = createShape();
+    shape.beginShape();
+    //shape.fill((int)random(0,255));
+    shape.noFill();
+    shape.stroke(bg);
+    shape.fill(#637987);
+    //shape.strokeWeight(map(constrain(area, 400, 1000), 400, 1000, 2, 15));
     //shape.noStroke();
     for(PVector vertex: verts) {
       shape.vertex(vertex.x, vertex.y);
