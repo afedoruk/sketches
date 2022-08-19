@@ -7,7 +7,7 @@ int excentr = 1;
 ArrayList<PVector> verts =  new ArrayList<PVector>();
 ArrayList<Polygon> polys =  new ArrayList<Polygon>();
 
-int NUM_OF_INITIAL_VERTICES = 12;
+int NUM_OF_INITIAL_VERTICES = 5;
 int depth = 0, IMMUNITY_DEPTH = 3;
 
 void setup() {
@@ -23,7 +23,7 @@ void setup() {
     verts.add(new PVector( width/2 + random(-excentr, excentr) + distance * cos(radians(angle)),  height/2  + random(-excentr, excentr) + distance * sin(radians(angle))));
   }
   Polygon initialPoly = new Polygon(new PVector(0, 0), verts);
-  initialPoly.display2();
+  initialPoly.display();
   polys.add(initialPoly);
 }
 
@@ -41,7 +41,7 @@ void mouseClicked() {
   }
   background(bg);
   for(Polygon newPoly:newPolys) {
-      newPoly.display2();
+      newPoly.display();
   }
   
   polys.clear();

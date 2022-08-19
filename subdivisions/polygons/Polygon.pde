@@ -23,7 +23,7 @@ class Polygon {
     shape.noFill();
     shape.stroke(bg);
     shape.fill(#637987);
-    shape.strokeWeight(map(constrain(area, 400, 1000), 400, 1000, 2, 15));
+    shape.strokeWeight(map(constrain(area, 400, 1000), 400, 1000, 2, 10));
     //shape.noStroke();
     for(PVector vertex: verts) {
       shape.vertex(vertex.x, vertex.y);
@@ -38,24 +38,30 @@ class Polygon {
   }
   
   void display2() {
-    shape = createShape();
-    shape.beginShape();
+   // display();
+    beginShape();
     //shape.fill((int)random(0,255));
-    shape.noFill();
-    shape.stroke(bg);
-    shape.fill(#637987);
-    //shape.strokeWeight(map(constrain(area, 400, 1000), 400, 1000, 2, 15));
-    //shape.noStroke();
-    for(PVector vertex: verts) {
-      shape.vertex(vertex.x, vertex.y);
-      //println(vertex.x, " ", vertex.y);
+    strokeWeight(1);
+    
+    stroke(bg);
+    fill(#637987);
+    
+    ArrayList<PVector> curvedVerts = new ArrayList<PVector>(); 
+    
+    for(int i=0; i < verts.size(); i++) {
+      PVector edge = PVector.sub(verts.get(getNextVert(i)), verts.get(i));
+     // curvedVerts.add(PVector.add(verts.get(i), PVector.mult(edge, 0.3)));
+      curvedVerts.add(PVector.add(verts.get(i), PVector.mult(edge, random(0.3, 0.4))));
     }
-    shape.endShape(CLOSE);
-    shape(shape, pivot.x, pivot.y);
-    //fill(random(200), random(200), random(200));
-    //for(int i=0; i < verts.size(); i++) {
-    //  text(i, verts.get(i).x+random(20), verts.get(i).y+random(20)); 
-    //}
+    
+    curveVertex(curvedVerts.get(curvedVerts.size()-1).x, curvedVerts.get(curvedVerts.size()-1).y);
+    for(PVector vertex: curvedVerts) {
+      curveVertex(vertex.x, vertex.y);
+      
+    }
+    curveVertex(curvedVerts.get(0).x, curvedVerts.get(0).y);
+    curveVertex(curvedVerts.get(1).x, curvedVerts.get(1).y);
+    endShape(CLOSE);
   }
   
   int getNumOfMostLengthEdge() {
